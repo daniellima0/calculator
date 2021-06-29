@@ -44,6 +44,7 @@ const addOperator = container.querySelector('#add');
 const subtractOperator = container.querySelector('#subtract');
 const multiplyOperator = container.querySelector('#multiply');
 const divideOperator = container.querySelector('#divide');
+const equalOperator = container.querySelector('#equal');
 let currentValue = 0;
 let subtractCounter = 0;
 let multiplyCounter = 0;
@@ -55,33 +56,37 @@ currentResult.textContent = 0;
 
 numbers.forEach(number => {
     number.addEventListener('click', () => {
+        displayEqualSign.remove();
         numbersPressed.push(number.textContent);
         populateDisplay(numbersPressed);
     })
 })
 
 clear.addEventListener('click', () => {
+    displayEqualSign.remove();
     clearDisplay();
 });
 
 addOperator.addEventListener('click', () => {
+    displayEqualSign.remove();
     currentValue = add(currentValue, numbersPressed.join(''));
-    currentResult.textContent = currentValue;
+    currentResult.textContent = '';
     previousResult.textContent = currentValue + '+';
     // Clean array
     numbersPressed = [];
 });
 
 subtractOperator.addEventListener('click', () => {
+    displayEqualSign.remove();
     if (subtractCounter != 0) {
         currentValue = subtract(currentValue, numbersPressed.join(''));
-        currentResult.textContent = currentValue;
+        currentResult.textContent = '';
         previousResult.textContent = currentValue + '-';
         // Clean array
         numbersPressed = [];
     } else {
         currentValue = +numbersPressed.join('');
-        currentResult.textContent = currentValue;
+        currentResult.textContent = '';
         previousResult.textContent = currentValue + '-';
         numbersPressed = [];
     }
@@ -89,15 +94,16 @@ subtractOperator.addEventListener('click', () => {
 });
 
 multiplyOperator.addEventListener('click', () => {
+    displayEqualSign.remove();
     if (multiplyCounter != 0) {
         currentValue = multiply(currentValue, numbersPressed.join(''));
-        currentResult.textContent = currentValue;
+        currentResult.textContent = '';
         previousResult.textContent = currentValue + '×';
         // Clean array
         numbersPressed = [];
     } else {
         currentValue = +numbersPressed.join('');
-        currentResult.textContent = currentValue;
+        currentResult.textContent = '';
         previousResult.textContent = currentValue + '×';
         numbersPressed = [];
     }
@@ -105,17 +111,60 @@ multiplyOperator.addEventListener('click', () => {
 });
 
 divideOperator.addEventListener('click', () => {
+    displayEqualSign.remove();
     if (divideCounter != 0) {
         currentValue = divide(currentValue, numbersPressed.join(''));
-        currentResult.textContent = currentValue;
+        currentResult.textContent = '';
         previousResult.textContent = currentValue + '÷';
         // Clean array
         numbersPressed = [];
     } else {
         currentValue = +numbersPressed.join('');
-        currentResult.textContent = currentValue;
+        currentResult.textContent = '';
         previousResult.textContent = currentValue + '÷';
         numbersPressed = [];
     }
     divideCounter++;
 });
+
+let firstValue;
+let secondValue;
+let operator;
+const displayEqualSign = document.createElement('P');
+displayEqualSign.id = 'display-equal';
+displayEqualSign.textContent = '=';
+displayEqualSign.style.color = 'white';
+displayEqualSign.style.fontFamily = 'sans - serif';
+displayEqualSign.style.fontSize = '3.2rem';
+displayEqualSign.style.position = 'absolute';
+displayEqualSign.style.top = '3.5rem';
+displayEqualSign.style.left = '1rem';
+
+equal.addEventListener('click', () => {
+    container.append(displayEqualSign);
+    let arrayOfFirstValue = previousResult.textContent.split(""); // e.g. array ['1','0','+']
+    operator = arrayOfFirstValue.pop(); // e.g. string '+'
+    let stringOfFirstValue = arrayOfFirstValue.join(''); // e.g. string '10'
+    firstValue = +stringOfFirstValue; //e.g. number 10
+    secondValue = +numbersPressed.join('');
+
+    if (operator == '+') {
+        currentValue
+        currentResult.textContent = add(firstValue, secondValue);
+    } else if (operator == '-') {
+        currentResult.textContent = subtract(firstValue, secondValue);
+    } else if (operator == '×') {
+        currentResult.textContent = multiply(firstValue, secondValue);
+    } else if (operator == '÷') {
+        currentResult.textContent = divide(firstValue, secondValue);
+    }
+
+    previousResult.textContent = '';
+    // Clean array
+    numbersPressed = [];
+});
+
+// TODO:
+// Make a function out of clean array and try to merge with cleanDisplay
+// insert a 0 when clickin on the point and if none number was clicked before
+// This gotta be my master project (organize files in folders)
