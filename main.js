@@ -72,7 +72,7 @@ addOperator.addEventListener('click', () => {
     currentValue = add(currentValue, numbersPressed.join(''));
     currentResult.textContent = '';
     previousResult.textContent = currentValue + '+';
-    // Clean array
+    // Clear array
     numbersPressed = [];
 });
 
@@ -82,7 +82,7 @@ subtractOperator.addEventListener('click', () => {
         currentValue = subtract(currentValue, numbersPressed.join(''));
         currentResult.textContent = '';
         previousResult.textContent = currentValue + '-';
-        // Clean array
+        // Clear array
         numbersPressed = [];
     } else {
         currentValue = +numbersPressed.join('');
@@ -99,7 +99,7 @@ multiplyOperator.addEventListener('click', () => {
         currentValue = multiply(currentValue, numbersPressed.join(''));
         currentResult.textContent = '';
         previousResult.textContent = currentValue + '×';
-        // Clean array
+        // Clear array
         numbersPressed = [];
     } else {
         currentValue = +numbersPressed.join('');
@@ -116,7 +116,7 @@ divideOperator.addEventListener('click', () => {
         currentValue = divide(currentValue, numbersPressed.join(''));
         currentResult.textContent = '';
         previousResult.textContent = currentValue + '÷';
-        // Clean array
+        // Clear array
         numbersPressed = [];
     } else {
         currentValue = +numbersPressed.join('');
@@ -149,7 +149,6 @@ equal.addEventListener('click', () => {
     secondValue = +numbersPressed.join('');
 
     if (operator == '+') {
-        currentValue
         currentResult.textContent = add(firstValue, secondValue);
     } else if (operator == '-') {
         currentResult.textContent = subtract(firstValue, secondValue);
@@ -160,11 +159,12 @@ equal.addEventListener('click', () => {
     }
 
     previousResult.textContent = '';
-    // Clean array
+    // Clear array
     numbersPressed = [];
 });
 
 // TODO:
 // Make a function out of clean array and try to merge with cleanDisplay
 // insert a 0 when clickin on the point and if none number was clicked before
+// Add DELETE button
 // This gotta be my master project (organize files in folders)
