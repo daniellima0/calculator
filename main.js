@@ -3,55 +3,116 @@ function add(a, b) {
     let result = +a + +b;
     let resultString = result.toString();
     let resultArray = resultString.split('');
-    let fixedResult;
+    let fixedResult = null;
+    let isDecimal = false;
 
-    //desmistificar essa logica aqui e fazer com que números com ponto decimal sejam corrigidos pra 3 casas enquanto números inteiros não
     for (i = 0; i < resultArray.length; i++) {
         if (resultArray[i] == '.') {
-            fixedResult = +result.toFixed(3);
-            if (fixedResult.length > 9) {
-                console.log(fixedResult);
-                return (+fixedResult).toExponential();
-            } else {
-                return fixedResult;
-            }
-        } else {
-            fixedResult = result;
-            if (fixedResult.length > 9) {
-                console.log(fixedResult);
-                return (+fixedResult).toExponential();
-            } else {
-                return fixedResult;
-            }
+            isDecimal = true;
         }
     }
+
+    if (isDecimal == true) {
+        fixedResult = +result.toFixed(3);
+        resultArray = fixedResult.toString().split('');
+    }
+
+    if (resultArray.length > 9) {
+        fixedResult = (+fixedResult).toExponential();
+    }
+
+    if (fixedResult != null) {
+        return fixedResult;
+    }
+
+    return result;
 }
 
 function subtract(a, b) {
-    let result = +a - +b
-    let fixedResult = result.toFixed(3);
-    if (fixedResult.length > 9) {
-        return (+fixedResult).toExponential();
+    let result = +a - +b;
+    let resultString = result.toString();
+    let resultArray = resultString.split('');
+    let fixedResult = null;
+    let isDecimal = false;
+
+    for (i = 0; i < resultArray.length; i++) {
+        if (resultArray[i] == '.') {
+            isDecimal = true;
+        }
     }
-    return fixedResult;
+
+    if (isDecimal == true) {
+        fixedResult = +result.toFixed(3);
+        resultArray = fixedResult.toString().split('');
+    }
+
+    if (resultArray.length > 9) {
+        fixedResult = (+fixedResult).toExponential();
+    }
+
+    if (fixedResult != null) {
+        return fixedResult;
+    }
+
+    return result;
 }
 
 function multiply(a, b) {
-    let result = +a * +b
-    let fixedResult = result.toFixed(3);
-    if (fixedResult.length > 9) {
-        return (+fixedResult).toExponential();
+    let result = +a * +b;
+    let resultString = result.toString();
+    let resultArray = resultString.split('');
+    let fixedResult = null;
+    let isDecimal = false;
+
+    for (i = 0; i < resultArray.length; i++) {
+        if (resultArray[i] == '.') {
+            isDecimal = true;
+        }
     }
-    return fixedResult;
+
+    if (isDecimal == true) {
+        fixedResult = +result.toFixed(3);
+        resultArray = fixedResult.toString().split('');
+    }
+
+    if (resultArray.length > 9) {
+        fixedResult = (+fixedResult).toExponential();
+    }
+
+    if (fixedResult != null) {
+        return fixedResult;
+    }
+
+    return result;
 }
 
 function divide(a, b) {
-    let result = +a / +b
-    let fixedResult = result.toFixed(3);
-    if (fixedResult.length > 9) {
-        return (+fixedResult).toExponential();
+    let result = +a / +b;
+    let resultString = result.toString();
+    let resultArray = resultString.split('');
+    let fixedResult = null;
+    let isDecimal = false;
+
+    for (i = 0; i < resultArray.length; i++) {
+        if (resultArray[i] == '.') {
+            isDecimal = true;
+        }
     }
-    return fixedResult;
+
+    if (isDecimal == true) {
+        fixedResult = +result.toFixed(3);
+        resultArray = fixedResult.toString().split('');
+    }
+
+    if (resultArray.length > 9) {
+        fixedResult = (+fixedResult).toExponential();
+    }
+
+    if (fixedResult != null) {
+        return fixedResult;
+    }
+
+    return result;
 }
 
 function operate(operator, num1, num2) {
@@ -73,7 +134,7 @@ function clearDisplay() {
     pointCounter = 0;
 }
 
-// Variables declaration------------------------
+// Global Variables declaration------------------------
 let numbersPressed = [];
 const container = document.querySelector('#container');
 const currentResult = container.querySelector('#current-result');
@@ -98,6 +159,7 @@ displayEqualSign.style.position = 'absolute';
 displayEqualSign.style.top = '3.5rem';
 displayEqualSign.style.left = '1.5rem';
 let currentValue = 0;
+let addCounter = 0;
 let subtractCounter = 0;
 let multiplyCounter = 0;
 let divideCounter = 0;
@@ -113,9 +175,16 @@ currentResult.textContent = 0;
 
 numbers.forEach(number => {
     number.addEventListener('click', () => {
-        displayEqualSign.remove();
-        numbersPressed.push(number.textContent);
-        populateDisplay(numbersPressed);
+        if (document.querySelector('#display-equal') != null) {
+            displayEqualSign.remove();
+            numbersPressed = [];
+            numbersPressed.push(number.textContent);
+            populateDisplay(numbersPressed);
+        } else {
+            displayEqualSign.remove();
+            numbersPressed.push(number.textContent);
+            populateDisplay(numbersPressed);
+        }
     })
 });
 
@@ -137,15 +206,28 @@ percent.addEventListener('click', () => {
         currentResult.textContent = `${lastValue / 100}`;
         currentValue = currentResult.textContent;
         numbersPressed = currentResult.textContent.split('');
+        subtractCounter = 0;
+        multiplyCounter = 0;
+        divideCounter = 0;
     } else if (document.querySelector('#display-equal') == null) {
         currentResult.textContent = `${+numbersPressed.join('') / 100}`;
-        currentValue = currentResult.textContent;
-        numbersPressed = currentResult.textContent.split('');
+        currentValue = currentResult.textContent; //'2'
+        console.log('currentValue é', typeof currentValue, 'de valor:', currentValue);
+        numbersPressed = currentValue.split('');  //['2']
+        console.log('numbersPressed é', typeof numbersPressed, 'de valor:', numbersPressed);
+        addCounter = 0;
+        subtractCounter = 0;
+        multiplyCounter = 0;
+        divideCounter = 0;
     }
 });
 
 point.addEventListener('click', () => {
     if (document.querySelector('#display-equal') == null) {
+        if (numbersPressed.length == 0) {
+            numbersPressed[0] = '0';
+        }
+
         for (i = 0; i < numbersPressed.length; i++) {
             if (numbersPressed[i] == '.') {
                 pointCounter++;
@@ -155,26 +237,47 @@ point.addEventListener('click', () => {
             numbersPressed.push('.');
             currentResult.textContent = numbersPressed.join('');
         }
+    } else if (document.querySelector('#display-equal') != null) {
+        displayEqualSign.remove();
+        numbersPressed = [];
+        numbersPressed[0] = '0';
+        numbersPressed.push('.');
+        currentResult.textContent = numbersPressed.join('');
     }
 });
-// z index 1 2 3 container / display / displayed values
+
 addOperator.addEventListener('click', () => {
-    if (document.querySelector('#display-equal') != null) {
-        currentValue = lastValue;
-        previousResult.textContent = lastValue + '+';
-        currentResult.textContent = '';
-        // Clear array
-        numbersPressed = [];
-    } else if (document.querySelector('#display-equal') == null) {
-        currentValue = add(currentValue, numbersPressed.join(''));
-        console.log(currentValue);
-        currentResult.textContent = '';
-        //why isn't previousResult.textContent equal to 1.111 (in case 1.1111 is inputed)
-        previousResult.textContent = currentValue + '+';
-        // Clear array
-        numbersPressed = [];
+
+    if (addCounter != 0) {
+        if (document.querySelector('#display-equal') != null) {
+            currentValue = lastValue;
+            previousResult.textContent = lastValue + ' +';
+            currentResult.textContent = '';
+            // Clear array
+            numbersPressed = [];
+        } else if (document.querySelector('#display-equal') == null) {
+            currentValue = add(currentValue, numbersPressed.join(''));
+            currentResult.textContent = '';
+            previousResult.textContent = currentValue + ' +';
+            // Clear array
+            numbersPressed = [];
+        }
+    } else {
+        if (document.querySelector('#display-equal') != null) {
+            currentValue = lastValue;
+            previousResult.textContent = lastValue + ' +';
+            currentResult.textContent = '';
+            // Clear array
+            numbersPressed = [];
+        } else if (document.querySelector('#display-equal') == null) {
+            currentValue = +numbersPressed.join('');
+            currentResult.textContent = '';
+            previousResult.textContent = currentValue + ' +';
+            numbersPressed = [];
+        }
     }
     displayEqualSign.remove();
+    addCounter++;
     pointCounter = 0;
 });
 
@@ -182,28 +285,28 @@ subtractOperator.addEventListener('click', () => {
     if (subtractCounter != 0) {
         if (document.querySelector('#display-equal') != null) {
             currentValue = lastValue;
-            previousResult.textContent = lastValue + '-';
+            previousResult.textContent = lastValue + ' -';
             currentResult.textContent = '';
             // Clear array
             numbersPressed = [];
         } else if (document.querySelector('#display-equal') == null) {
             currentValue = subtract(currentValue, numbersPressed.join(''));
             currentResult.textContent = '';
-            previousResult.textContent = currentValue + '-';
+            previousResult.textContent = currentValue + ' -';
             // Clear array
             numbersPressed = [];
         }
     } else {
         if (document.querySelector('#display-equal') != null) {
             currentValue = lastValue;
-            previousResult.textContent = lastValue + '-';
+            previousResult.textContent = lastValue + ' -';
             currentResult.textContent = '';
             // Clear array
             numbersPressed = [];
         } else if (document.querySelector('#display-equal') == null) {
             currentValue = +numbersPressed.join('');
             currentResult.textContent = '';
-            previousResult.textContent = currentValue + '-';
+            previousResult.textContent = currentValue + ' -';
             numbersPressed = [];
         }
     }
@@ -216,28 +319,28 @@ multiplyOperator.addEventListener('click', () => {
     if (multiplyCounter != 0) {
         if (document.querySelector('#display-equal') != null) {
             currentValue = lastValue;
-            previousResult.textContent = lastValue + '×';
+            previousResult.textContent = lastValue + ' ×';
             currentResult.textContent = '';
             // Clear array
             numbersPressed = [];
         } else if (document.querySelector('#display-equal') == null) {
             currentValue = multiply(currentValue, numbersPressed.join(''));
             currentResult.textContent = '';
-            previousResult.textContent = currentValue + '×';
+            previousResult.textContent = currentValue + ' ×';
             // Clear array
             numbersPressed = [];
         }
     } else {
         if (document.querySelector('#display-equal') != null) {
             currentValue = lastValue;
-            previousResult.textContent = lastValue + '×';
+            previousResult.textContent = lastValue + ' ×';
             currentResult.textContent = '';
             // Clear array
             numbersPressed = [];
         } else if (document.querySelector('#display-equal') == null) {
             currentValue = +numbersPressed.join('');
             currentResult.textContent = '';
-            previousResult.textContent = currentValue + '×';
+            previousResult.textContent = currentValue + ' ×';
             numbersPressed = [];
         }
     }
@@ -250,28 +353,28 @@ divideOperator.addEventListener('click', () => {
     if (divideCounter != 0) {
         if (document.querySelector('#display-equal') != null) {
             currentValue = lastValue;
-            previousResult.textContent = lastValue + '÷';
+            previousResult.textContent = lastValue + ' ÷';
             currentResult.textContent = '';
             // Clear array
             numbersPressed = [];
         } else if (document.querySelector('#display-equal') == null) {
             currentValue = divide(currentValue, numbersPressed.join(''));
             currentResult.textContent = '';
-            previousResult.textContent = currentValue + '÷';
+            previousResult.textContent = currentValue + ' ÷';
             // Clear array
             numbersPressed = [];
         }
     } else {
         if (document.querySelector('#display-equal') != null) {
             currentValue = lastValue;
-            previousResult.textContent = lastValue + '÷';
+            previousResult.textContent = lastValue + ' ÷';
             currentResult.textContent = '';
             // Clear array
             numbersPressed = [];
         } else if (document.querySelector('#display-equal') == null) {
             currentValue = +numbersPressed.join('');
             currentResult.textContent = '';
-            previousResult.textContent = currentValue + '÷';
+            previousResult.textContent = currentValue + ' ÷';
             numbersPressed = [];
         }
     }
@@ -306,8 +409,6 @@ equal.addEventListener('click', () => {
 });
 
 // TODO:
-// Make a function out of clean array and try to merge with cleanDisplay
-// insert a 0 when clickin on the point and if none number was clicked before
-// Add DELETE button
-// This gotta be my master project (organize files in folders)
-// add e+ to number when cross the limit of numbers that fit in the display
+// Remove repeated code (create functions)
+// Make code more readable and easier to understand
+// Organize files in folders

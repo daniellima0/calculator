@@ -31,6 +31,7 @@ body {
     border-radius: 1rem;
     background-color: rgb(20, 20, 20);
     box-shadow: 0.3rem 0.3rem 1rem black;
+    z-index: 1;
 }
 
 #display {
@@ -43,6 +44,7 @@ body {
     width: 24rem;
     height: 8rem;
     position: relative;
+    z-index: 2;
 }
 
 #previous-input {
@@ -78,7 +80,7 @@ body {
     cursor: pointer;
 }
 
-.special-operator:hover {
+.erase:hover {
     background-color: #e4a7a7;
     cursor: pointer;
 }
@@ -121,8 +123,7 @@ body {
     box-shadow: 0.3rem 0.3rem 0.5rem black;
 }
 
-.special-operator {
-    /* background-color: var(--lightGrey); */
+.erase {
     background-color: var(--customRed);
     color: black;
     border: none;
@@ -140,4 +141,6 @@ body {
 }
 
 /* TODO
-- create variables for all colors */
+- Create variables for all colors
+- Make text go behind calculator when text is too long for display
+*/
