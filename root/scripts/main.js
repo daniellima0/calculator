@@ -417,8 +417,10 @@ equal.addEventListener('click', () => {
 });
 
 // TODO (in order of priority):
-// (TO COMMIT)Make numbers fit the display by transforming them to exponential if it's to large
+// Change point code to simply disable button when there is already one on display (optional - verify viability)
 // Remove repeated code (create functions)
+// Make sure all functions are being used
 // Make code more readable and easier to understand (name variables and functions better AND comment code)
 // Fix: when a number between e+10 and e+20 inclusively is inputed, their sum with some number (like 2 for example) returns 000e+0
 // Organize files in folders
+// Add keyboard support
