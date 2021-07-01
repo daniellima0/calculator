@@ -1,6 +1,7 @@
 // Functions declaration------------------------
 function add(a, b) {
     let result = +a + +b;
+    console.log(result);
     let resultString = result.toString();
     let resultArray = resultString.split('');
     let fixedResult = null;
@@ -18,10 +19,11 @@ function add(a, b) {
     }
 
     if (resultArray.length > 9) {
-        fixedResult = (+fixedResult).toExponential();
+        fixedResult = (+fixedResult).toExponential(3);
     }
 
     if (fixedResult != null) {
+        console.log(fixedResult);
         return fixedResult;
     }
 
@@ -76,7 +78,7 @@ function multiply(a, b) {
     }
 
     if (resultArray.length > 9) {
-        fixedResult = (+fixedResult).toExponential();
+        fixedResult = (+fixedResult).toExponential(3);
     }
 
     if (fixedResult != null) {
@@ -105,7 +107,7 @@ function divide(a, b) {
     }
 
     if (resultArray.length > 9) {
-        fixedResult = (+fixedResult).toExponential();
+        fixedResult = (+fixedResult).toExponential(3);
     }
 
     if (fixedResult != null) {
@@ -154,9 +156,9 @@ displayEqualSign.id = 'display-equal';
 displayEqualSign.textContent = '=';
 displayEqualSign.style.color = 'black';
 displayEqualSign.style.fontFamily = 'sans - serif';
-displayEqualSign.style.fontSize = '3.2rem';
+displayEqualSign.style.fontSize = '2.5rem';
 displayEqualSign.style.position = 'absolute';
-displayEqualSign.style.top = '3.5rem';
+displayEqualSign.style.top = '3rem';
 displayEqualSign.style.left = '1.5rem';
 let currentValue = 0;
 let addCounter = 0;
@@ -181,9 +183,14 @@ numbers.forEach(number => {
             numbersPressed.push(number.textContent);
             populateDisplay(numbersPressed);
         } else {
-            displayEqualSign.remove();
-            numbersPressed.push(number.textContent);
-            populateDisplay(numbersPressed);
+            if (numbersPressed.length > 9) {
+                numbersPressed.push(number.textContent);
+                currentResult.textContent = Number(numbersPressed.join('')).toExponential(3);
+            } else {
+                // displayEqualSign.remove();
+                numbersPressed.push(number.textContent);
+                populateDisplay(numbersPressed);
+            }
         }
     })
 });
@@ -273,6 +280,7 @@ addOperator.addEventListener('click', () => {
             currentValue = +numbersPressed.join('');
             currentResult.textContent = '';
             previousResult.textContent = currentValue + ' +';
+            // Clear array
             numbersPressed = [];
         }
     }
@@ -408,7 +416,9 @@ equal.addEventListener('click', () => {
     pointCounter = 0;
 });
 
-// TODO:
+// TODO (in order of priority):
+// (TO COMMIT)Make numbers fit the display by transforming them to exponential if it's to large
 // Remove repeated code (create functions)
-// Make code more readable and easier to understand
+// Make code more readable and easier to understand (name variables and functions better AND comment code)
+// Fix: when a number between e+10 and e+20 inclusively is inputed, their sum with some number (like 2 for example) returns 000e+0
 // Organize files in folders

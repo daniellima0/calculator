@@ -9,37 +9,65 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="reset.css">
     <link rel="shortcut icon" href="calculator.png">
+    <script src="https://kit.fontawesome.com/b6760ea8bc.js"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div id="container">
-        <div id='display'>
-            <p id='previous-input'></p>
-            <p id='current-result'></p>
+    <main>
+        <div id="container">
+            <div id='display'>
+                <p id='previous-input'></p>
+                <p id='current-result'></p>
+            </div>
+            <div id="buttons">
+                <button id='clear' class="erase">AC</button>
+                <button id='del' class="erase">C</button>
+                <button id='percent' class='operator'>%</button>
+                <button id='divide' class="operator">&#247</button>
+                <button id='seven' class='number'>7</button>
+                <button id='eight' class='number'>8</button>
+                <button id='nine' class='number'>9</button>
+                <button id='multiply' class="operator">&#215</button>
+                <button id='four' class='number'>4</button>
+                <button id='five' class='number'>5</button>
+                <button id='six' class='number'>6</button>
+                <button id='subtract' class="operator">&#8722</button>
+                <button id='one' class='number'>1</button>
+                <button id='two' class='number'>2</button>
+                <button id='three' class='number'>3</button>
+                <button id='add' class="operator">+</button>
+                <button id='point'>.</button>
+                <button id='zero' class='number'>0</button>
+                <button id='equal' class="operator">&#61</button>
+            </div>
         </div>
-        <div id="buttons">
-            <button id='clear' class="erase">AC</button>
-            <button id='del' class="erase">C</button>
-            <button id='percent' class='operator'>%</button>
-            <button id='divide' class="operator">&#247</button>
-            <button id='seven' class='number'>7</button>
-            <button id='eight' class='number'>8</button>
-            <button id='nine' class='number'>9</button>
-            <button id='multiply' class="operator">&#215</button>
-            <button id='four' class='number'>4</button>
-            <button id='five' class='number'>5</button>
-            <button id='six' class='number'>6</button>
-            <button id='subtract' class="operator">&#8722</button>
-            <button id='one' class='number'>1</button>
-            <button id='two' class='number'>2</button>
-            <button id='three' class='number'>3</button>
-            <button id='add' class="operator">+</button>
-            <button id='point'>.</button>
-            <button id='zero' class='number'>0</button>
-            <button id='equal' class="operator">&#61</button>
+
+        <div id="project-info">
+            <p>This project is part of <a href='https://www.theodinproject.com/'
+                    target="_blank"> The Odin Project</a> </p>
         </div>
-    </div>
+    </main>
+
+    <footer id="footer">
+        <div id="my-info">
+            <p id="my-info-title">Contact Me</p>
+            <a href="mailto:danielmlima@protonmail.com"
+                id="email">danielmlima@protonmail.com</a>
+            <div id="icons">
+                <a href="https://github.com/daniellima0" target="_blank"><i
+                        class="fab fa-github fa-2x"></i></a>
+                <a href="https://www.linkedin.com/in/danielmlima/"
+                    target="_blank"><i class="fab fa-linkedin fa-2x"></i></a>
+            </div>
+        </div>
+    </footer>
+
     <script src="main.js"></script>
 </body>
 
 </html>
+
+<!-- TODO
+- (TO COMMIT) Create footer (put contact options on it and tell that the project is part of The Odin Project Course)
+-->
