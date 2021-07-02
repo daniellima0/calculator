@@ -1,8 +1,9 @@
-# Calculator (IN PROGRESS)
+# Calculator
 
 ## Introduction
 
-This project consists on a calculator built with plain HTML, CSS and Javascript.
+This project consists on a calculator built with plain HTML, CSS and Javascript  
+and it is part of [The Odin Project](https://www.theodinproject.com/).
 
 ## Visualize WebPage
 
