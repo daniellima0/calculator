@@ -1,70 +1,121 @@
-let inputedValue = [];
-
-const container = document.querySelector("#container");
-
-const currentValue = document.createElement("p");
-currentValue.style.position = 'absolute';
-currentValue.style.top = '5rem';
-currentValue.style.right = '2.5rem';
-
-const pastValue = document.createElement("p");
-pastValue.style.position = 'absolute';
-pastValue.style.top = '2.5rem';
-pastValue.style.right = '2.5rem';
-pastValue.style.fontSize = '1.2rem';
-pastValue.style.color = '#4c3438';
-
-function arrayToString(array) {
-    let string = array.join('');
-    return string;
-}
-
-function displayValue(value, element) {
-    if (element == pastValue) {
-        element.textContent = '+' + value;
-    } else {
-        element.textContent = value;
+function compute(symbol) {
+    switch (symbol) {
+        case '+':
+            previousValueTextElement.textContent = +previousValueTextElement.textContent + +currentValueTextElement.textContent;
+            break;
+        case '-':
+            previousValueTextElement.textContent = +previousValueTextElement.textContent - +currentValueTextElement.textContent;
+            break;
+        case '×':
+            previousValueTextElement.textContent = +previousValueTextElement.textContent * +currentValueTextElement.textContent;
+            break;
+        case '÷':
+            previousValueTextElement.textContent = +previousValueTextElement.textContent / +currentValueTextElement.textContent;
+            break;
+        default:
+            return;
     }
-    container.append(element);
 }
 
-const numbers = Array.from(document.querySelectorAll(".number"));
-numbers.forEach(number => {
+const numberButtons = Array.from(document.querySelectorAll('.number'));
+const operatorButtons = Array.from(document.querySelectorAll('.operator'));
+const percentButton = document.querySelector('#percent');
+const equalButton = document.querySelector('#equal');
+const deleteButton = document.querySelector('#del');
+const clearButton = document.querySelector('#clear');
+const currentValueTextElement = document.querySelector('#current-value');
+const previousValueTextElement = document.querySelector('#previous-value');
+const operationSign = document.querySelector('#operation-sign');
+
+numberButtons.forEach(number => {
     number.addEventListener('click', e => {
-        let numberValue = number.textContent;
-        inputedValue.push(numberValue);
-        displayValue(arrayToString(inputedValue), currentValue);
+        if (operationSign.textContent == '=') return;
+        if (number.textContent == '.' && currentValueTextElement.textContent.includes('.')) return;
+        currentValueTextElement.textContent = currentValueTextElement.textContent + number.textContent;
     });
 });
 
-let valueOne = [];
+operatorButtons.forEach(operator => {
+    operator.addEventListener('click', e => {
+        if (previousValueTextElement.textContent == '') {
+            previousValueTextElement.textContent = currentValueTextElement.textContent;
+            currentValueTextElement.textContent = '';
+            operationSign.textContent = operator.textContent;
+            return;
+        }
+        compute(operationSign.textContent);
+        currentValueTextElement.textContent = '';
+        operationSign.textContent = operator.textContent;
+        return;
+    });
+});
 
-const add = document.querySelector("#add");
-add.addEventListener('click', e => {
-    if (valueOne.length == 0) {
-        valueOne = inputedValue;
-        displayValue(arrayToString(valueOne), pastValue);
-    } else {
-        //
+equalButton.addEventListener('click', e => {
+    compute(operationSign.textContent);
+    currentValueTextElement.textContent = previousValueTextElement.textContent;
+    previousValueTextElement.textContent = '';
+    operationSign.textContent = '=';
+});
+
+percentButton.addEventListener('click', e => {
+    currentValueTextElement.textContent = currentValueTextElement.textContent / 100;
+});
+
+deleteButton.addEventListener('click', e => {
+    let array = Array.from(currentValueTextElement.textContent);
+    array.pop();
+    let string = array.join('');
+    currentValueTextElement.textContent = string;
+});
+
+clearButton.addEventListener('click', e => {
+    currentValueTextElement.textContent = '';
+    previousValueTextElement.textContent = '';
+    operationSign.textContent = '';
+});
+
+document.addEventListener('keydown', e => {
+    if (e.key >= 0 && e.key <= 9 || e.key == '.') {
+        if (operationSign.textContent == '=') return;
+        if (e.key == '.' && currentValueTextElement.textContent.includes('.')) return;
+        currentValueTextElement.textContent = currentValueTextElement.textContent + e.key;
     }
-});
 
-const subtract = document.querySelector("#subtract");
-subtract.addEventListener('click', e => {
-    alert('it worked');
-});
+    if (e.key === '=' || e.key === 'Enter') {
+        compute(operationSign.textContent);
+        currentValueTextElement.textContent = previousValueTextElement.textContent;
+        previousValueTextElement.textContent = '';
+        operationSign.textContent = '=';
+    }
 
-const multiply = document.querySelector("#multiply");
-multiply.addEventListener('click', e => {
-    alert('it worked');
-});
+    if (e.key === 'Backspace') {
+        let array = Array.from(currentValueTextElement.textContent);
+        array.pop();
+        let string = array.join('');
+        currentValueTextElement.textContent = string;
+    }
 
-const divide = document.querySelector("#divide");
-divide.addEventListener('click', e => {
-    alert('it worked');
-});
+    if (e.key === 'Escape') {
+        currentValueTextElement.textContent = '';
+        previousValueTextElement.textContent = '';
+        operationSign.textContent = '';
+    }
 
-const equal = document.querySelector("#equal");
-equal.addEventListener('click', e => {
-    alert('it worked');
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        let realKey;
+        if (e.key == '+') realKey = '+';
+        if (e.key == '-') realKey = '-';
+        if (e.key == '*') realKey = '×';
+        if (e.key == '/') realKey = '÷';
+        if (previousValueTextElement.textContent == '') {
+            previousValueTextElement.textContent = currentValueTextElement.textContent;
+            currentValueTextElement.textContent = '';
+            operationSign.textContent = realKey;
+            return;
+        }
+        compute(operationSign.textContent);
+        currentValueTextElement.textContent = '';
+        operationSign.textContent = realKey;
+        return;
+    }
 });
