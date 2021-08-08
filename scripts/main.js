@@ -118,4 +118,8 @@ document.addEventListener('keydown', e => {
         operationSign.textContent = realKey;
         return;
     }
+
+    if (e.key == '%'){
+        currentValueTextElement.textContent = currentValueTextElement.textContent / 100;
+    }
 });
